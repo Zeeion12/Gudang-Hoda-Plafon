@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+:root {
+  /* ===== Base ===== */
+    --color-bg-main: #d9e1f1;
+    --color-primary: #d9e1f1;
+
+    /* ===== Surface / Container ===== */
+    --color-surface-light: #8fb3e2;
+    --color-surface-medium: #31487a;
+    --color-surface-dark: #1e2e4f;
+
+    /* ===== Typography ===== */
+    --color-text-primary: #0f172a;   /* near-black */
+    --color-text-secondary: #31487a;
+    --color-text-muted: #64748b;
+    --color-text-inverse: #ffffff;
+
+    /* ===== Action ===== */
+    --color-action-primary: #31487a;
+    --color-action-hover: #1e2e4f;
+    --color-action-disabled: #8fb3e2;
+
+    /* ===== State ===== */
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+    --color-info: #3b82f6;
+}

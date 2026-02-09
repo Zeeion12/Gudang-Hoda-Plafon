@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { MdMenu, MdSearch, MdNotifications, MdLogout, MdPerson, MdSettings } from 'react-icons/md';
 import {
     DropdownMenu,
@@ -9,6 +9,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { useAuth } from '@/hooks/useAuth';
 
 interface HeaderProps {
     onMenuClick?: () => void; // Untuk trigger mobile nav
@@ -16,6 +17,8 @@ interface HeaderProps {
 
 export default function Header({ onMenuClick }: HeaderProps) {
     const location = useLocation();
+    const navigate = useNavigate();
+    const { user, logout } = useAuth();
 
     // Generate breadcrumb dari pathname
     const generateBreadcrumb = () => {
@@ -42,13 +45,35 @@ export default function Header({ onMenuClick }: HeaderProps) {
 
     const breadcrumbs = generateBreadcrumb();
 
-    const handleLogout = () => {
-        // TODO: Implement logout logic
-        console.log('Logout clicked');
+    const handleLogout = async () => {
+        try {
+            await logout();
+            navigate('/login', { replace: true });
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    };
+
+    // Get user initials for avatar
+    const getUserInitials = () => {
+        if (!user?.email) return 'U';
+        return user.email
+            .split('@')[0]
+            .split('.')
+            .map((part) => part[0])
+            .join('')
+            .toUpperCase()
+            .slice(0, 2);
+    };
+
+    // Get display name from email
+    const getDisplayName = () => {
+        if (!user?.email) return 'User';
+        return user.email.split('@')[0].charAt(0).toUpperCase() + user.email.split('@')[0].slice(1);
     };
 
     return (
-        <header className="sticky top-0 z-30 h-16 border-b border-gray-200 bg-white shadow-sm">
+        <header className="sticky top-0 z-20 h-16 border-b border-gray-200 bg-white shadow-sm w-full">
             <div className="flex h-full items-center justify-between px-4 lg:px-6">
                 {/* Left Section: Mobile Menu + Breadcrumb */}
                 <div className="flex items-center gap-4">
@@ -124,11 +149,11 @@ export default function Header({ onMenuClick }: HeaderProps) {
                             <button className="flex h-9 items-center gap-2 rounded-lg bg-(--color-bg-main) px-3 hover:bg-(--color-surface-light)/30 transition-colors">
                                 <Avatar className="h-7 w-7">
                                     <AvatarFallback className="bg-(--color-action-primary) text-white text-xs font-semibold">
-                                        M
+                                        {getUserInitials()}
                                     </AvatarFallback>
                                 </Avatar>
                                 <span className="hidden text-sm font-medium text-(--color-text-primary) sm:block">
-                                    Manager
+                                    {getDisplayName()}
                                 </span>
                             </button>
                         </DropdownMenuTrigger>
@@ -137,10 +162,10 @@ export default function Header({ onMenuClick }: HeaderProps) {
                             <DropdownMenuLabel>
                                 <div>
                                     <p className="text-sm font-medium text-(--color-text-primary)">
-                                        Manager
+                                        {getDisplayName()}
                                     </p>
-                                    <p className="text-xs text-(--color-text-muted)">
-                                        manager@warehouse.com
+                                    <p className="text-xs text-(--color-text-muted) truncate">
+                                        {user?.email || 'user@email.com'}
                                     </p>
                                 </div>
                             </DropdownMenuLabel>

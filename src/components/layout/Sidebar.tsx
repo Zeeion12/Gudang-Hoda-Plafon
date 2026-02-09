@@ -67,7 +67,7 @@ export default function Sidebar() {
     return (
         <aside
             className={`
-        fixed left-0 top-0 z-40 h-screen
+        fixed left-0 top-0 z-30 h-screen
         bg-(--color-surface-dark)
         transition-all duration-300 ease-in-out
         ${isCollapsed ? 'w-20' : 'w-64'}

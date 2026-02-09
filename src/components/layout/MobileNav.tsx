@@ -8,9 +8,7 @@ import {
     MdUpload,
     MdHistory,
     MdAssessment,
-    MdClose,
     MdLogout,
-    MdWarehouse
 } from 'react-icons/md';
 
 
@@ -115,7 +113,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
+                        className="fixed inset-0 z-25 bg-black/50 backdrop-blur-sm lg:hidden"
                         onClick={onClose}
                         aria-hidden="true"
                     />
@@ -126,31 +124,9 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                         animate={{ x: 0 }}
                         exit={{ x: '-100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                        className="fixed left-0 top-0 z-50 h-full w-72 bg-(--color-surface-dark) shadow-2xl lg:hidden"
+                        className="fixed left-0 top-16 z-40 h-[calc(100%-4rem)] w-72 bg-(--color-surface-dark) shadow-2xl lg:hidden overflow-y-auto"
                     >
-                        {/* Header */}
-                        <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
-                            <div className="flex items-center gap-3">
-                                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-(--color-action-primary)">
-                                    <MdWarehouse className="h-6 w-6 text-white" />
-                                </div>
-                                <div>
-                                    <h1 className="text-lg font-bold text-white">WMS</h1>
-                                    <p className="text-xs text-white/60">Warehouse System</p>
-                                </div>
-                            </div>
-
-                            {/* Close Button */}
-                            <button
-                                onClick={onClose}
-                                className="flex h-8 w-8 items-center justify-center rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors"
-                                aria-label="Close menu"
-                            >
-                                <MdClose className="h-5 w-5" />
-                            </button>
-                        </div>
-
-                        {/* User Info */}
+                        {/* User Info Section */}
                         <div className="border-b border-white/10 p-4">
                             <div className="flex items-center gap-3 rounded-lg bg-white/5 p-3">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-(--color-action-primary) text-sm font-semibold text-white">

@@ -10,7 +10,8 @@ import {
     MdAssessment,
     MdLogout,
 } from 'react-icons/md';
-
+import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 interface MobileNavProps {
     isOpen: boolean;
@@ -30,27 +31,27 @@ const navItems: NavItem[] = [
         icon: MdDashboard,
     },
     {
-        label: 'Products',
+        label: 'Produk',
         path: '/products',
         icon: MdInventory,
     },
     {
-        label: 'Stock In',
+        label: 'Barang Masuk',
         path: '/stock-in',
         icon: MdDownload,
     },
     {
-        label: 'Stock Out',
+        label: 'Barang Keluar',
         path: '/stock-out',
         icon: MdUpload,
     },
     {
-        label: 'Transactions',
+        label: 'Riwayat Transaksi',
         path: '/transactions',
         icon: MdHistory,
     },
     {
-        label: 'Reports',
+        label: 'Laporan',
         path: '/reports',
         icon: MdAssessment,
     },
@@ -58,6 +59,8 @@ const navItems: NavItem[] = [
 
 export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
     const location = useLocation();
+    const { logout } = useAuth();
+    const navigate = useNavigate();
 
     const isActive = (path: string) => {
         // Exact match untuk root path
@@ -98,9 +101,13 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
         return () => document.removeEventListener('keydown', handleEscape);
     }, [isOpen, onClose]);
 
-    const handleLogout = () => {
-        // TODO: Implement logout
-        console.log('Logout clicked');
+    const handleLogout = async () => {
+        try {
+            await logout();
+            navigate('/login', { replace: true });
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
     };
 
     return (
@@ -113,7 +120,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="fixed inset-0 z-25 bg-black/50 backdrop-blur-sm lg:hidden"
+                        className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
                         onClick={onClose}
                         aria-hidden="true"
                     />
@@ -124,17 +131,17 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                         animate={{ x: 0 }}
                         exit={{ x: '-100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                        className="fixed left-0 top-16 z-40 h-[calc(100%-4rem)] w-72 bg-(--color-surface-dark) shadow-2xl lg:hidden overflow-y-auto"
+                        className="fixed left-0 top-0 z-50 h-full w-72 bg-(--color-surface-dark) shadow-2xl lg:hidden overflow-y-auto"
                     >
-                        {/* User Info Section */}
+                        {/* Header */}
                         <div className="border-b border-white/10 p-4">
-                            <div className="flex items-center gap-3 rounded-lg bg-white/5 p-3">
-                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-(--color-action-primary) text-sm font-semibold text-white">
-                                    M
+                            <div className="flex items-center gap-3">
+                                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-(--color-action-primary)">
+                                    <MdDashboard className="h-6 w-6 text-white" />
                                 </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-medium text-white truncate">Manager</p>
-                                    <p className="text-xs text-white/60 truncate">manager@warehouse.com</p>
+                                <div>
+                                    <h1 className="text-lg font-bold text-white">HodaPlafon</h1>
+                                    <p className="text-xs text-white/60">Warehouse System</p>
                                 </div>
                             </div>
                         </div>
@@ -155,26 +162,26 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                                         <Link
                                             to={item.path}
                                             className={`
-                        group flex items-center gap-3 rounded-lg px-3 py-2.5
-                        transition-all duration-200
-                        ${active
+                                                group flex items-center gap-3 rounded-lg px-3 py-2.5
+                                                transition-all duration-200
+                                                ${active
                                                     ? 'bg-(--color-action-primary) text-white shadow-lg'
                                                     : 'text-white/70 hover:bg-white/5 hover:text-white'
                                                 }
-                      `}
+                                            `}
                                         >
                                             <Icon
                                                 className={`
-                          h-5 w-5 shrink-0
-                          ${active ? 'text-white' : 'text-white/70 group-hover:text-white'}
-                        `}
+                                                    h-5 w-5 shrink-0
+                                                    ${active ? 'text-white' : 'text-white/70 group-hover:text-white'}
+                                                `}
                                             />
                                             <span className="text-sm font-medium">{item.label}</span>
 
                                             {/* Active Indicator */}
                                             {active && (
                                                 <motion.div
-                                                    layoutId="activeIndicator"
+                                                    layoutId="activeIndicatorMobile"
                                                     className="ml-auto h-1.5 w-1.5 rounded-full bg-white"
                                                 />
                                             )}
@@ -191,7 +198,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                                 className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-white/70 hover:bg-white/5 hover:text-white transition-colors"
                             >
                                 <MdLogout className="h-5 w-5" />
-                                <span className="text-sm font-medium">Logout</span>
+                                <span className="text-sm font-medium">Keluar</span>
                             </button>
                         </div>
                     </motion.aside>

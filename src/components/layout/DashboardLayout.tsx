@@ -6,16 +6,20 @@ import Header from './Header';
 import MobileNav from './MobileNav';
 
 interface DashboardLayoutProps {
-    children?: ReactNode; // Optional untuk backward compatibility
+    children?: ReactNode;
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
     return (
         <div className="min-h-screen flex flex-col bg-(--color-bg-main)">
             {/* Sidebar - Desktop Only */}
-            <Sidebar />
+            <Sidebar
+                isCollapsed={isSidebarCollapsed}
+                onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+            />
 
             {/* Mobile Navigation Drawer */}
             <MobileNav
@@ -24,7 +28,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             />
 
             {/* Header + Main Content Wrapper */}
-            <div className="flex flex-1 flex-col lg:pl-64">
+            <div
+                className={`
+                    flex flex-1 flex-col transition-all duration-300
+                    ${isSidebarCollapsed ? 'lg:pl-20' : 'lg:pl-64'}
+                `}
+            >
                 {/* Header - Fixed */}
                 <Header onMenuClick={() => setIsMobileNavOpen(true)} />
 

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
     MdDashboard,
@@ -25,35 +24,39 @@ const navItems: NavItem[] = [
         icon: MdDashboard,
     },
     {
-        label: 'Products',
+        label: 'Produk',
         path: '/products',
         icon: MdInventory,
     },
     {
-        label: 'Stock In',
+        label: 'Barang Masuk',
         path: '/stock-in',
         icon: MdDownload,
     },
     {
-        label: 'Stock Out',
+        label: 'Barang Keluar',
         path: '/stock-out',
         icon: MdUpload,
     },
     {
-        label: 'Transactions',
+        label: 'Riwayat Transaksi',
         path: '/transactions',
         icon: MdHistory,
     },
     {
-        label: 'Reports',
+        label: 'Laporan',
         path: '/reports',
         icon: MdAssessment,
     },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+    isCollapsed: boolean;
+    onToggleCollapse: () => void;
+}
+
+export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
     const location = useLocation();
-    const [isCollapsed, setIsCollapsed] = useState(false);
 
     const isActive = (path: string) => {
         // Exact match untuk root path
@@ -67,12 +70,12 @@ export default function Sidebar() {
     return (
         <aside
             className={`
-        fixed left-0 top-0 z-30 h-screen
-        bg-(--color-surface-dark)
-        transition-all duration-300 ease-in-out
-        ${isCollapsed ? 'w-20' : 'w-64'}
-        hidden lg:block
-      `}
+                fixed left-0 top-0 z-30 h-screen
+                bg-(--color-surface-dark)
+                transition-all duration-300 ease-in-out
+                ${isCollapsed ? 'w-20' : 'w-64'}
+                hidden lg:block
+            `}
         >
             {/* Header / Logo Area */}
             <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
@@ -82,7 +85,7 @@ export default function Sidebar() {
                             <MdWarehouse className="h-6 w-6 text-white" />
                         </div>
                         <div>
-                            <h1 className="text-lg font-bold text-white">WMS</h1>
+                            <h1 className="text-lg font-bold text-white">HodaPlafon</h1>
                             <p className="text-xs text-white/60">Warehouse System</p>
                         </div>
                     </div>
@@ -96,17 +99,17 @@ export default function Sidebar() {
 
                 {/* Collapse Toggle Button */}
                 <button
-                    onClick={() => setIsCollapsed(!isCollapsed)}
+                    onClick={onToggleCollapse}
                     className={`
-            absolute -right-3 top-6 
-            flex h-6 w-6 items-center justify-center 
-            rounded-full border-2 border-(--color-surface-dark)
-            bg-(--color-action-primary)
-            text-white
-            hover:bg-(--color-action-hover)
-            transition-colors
-            ${isCollapsed ? 'left-1/2 -translate-x-1/2' : ''}
-          `}
+                        absolute -right-3 top-6 
+                        flex h-6 w-6 items-center justify-center 
+                        rounded-full border-2 border-(--color-surface-dark)
+                        bg-(--color-action-primary)
+                        text-white
+                        hover:bg-(--color-action-hover)
+                        transition-colors
+                        ${isCollapsed ? 'left-1/2 -translate-x-1/2' : ''}
+                    `}
                     aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
                 >
                     {isCollapsed ? (
@@ -128,21 +131,21 @@ export default function Sidebar() {
                             key={item.path}
                             to={item.path}
                             className={`
-                group flex items-center gap-3 rounded-lg px-3 py-2.5
-                transition-all duration-200
-                ${active
+                                group flex items-center gap-3 rounded-lg px-3 py-2.5
+                                transition-all duration-200
+                                ${active
                                     ? 'bg-(--color-action-primary) text-white shadow-lg'
                                     : 'text-white/70 hover:bg-white/5 hover:text-white'
                                 }
-                ${isCollapsed ? 'justify-center' : ''}
-              `}
+                                ${isCollapsed ? 'justify-center' : ''}
+                            `}
                             title={isCollapsed ? item.label : undefined}
                         >
                             <Icon
                                 className={`
-                  h-5 w-5 shrink-0
-                  ${active ? 'text-white' : 'text-white/70 group-hover:text-white'}
-                `}
+                                    h-5 w-5 shrink-0
+                                    ${active ? 'text-white' : 'text-white/70 group-hover:text-white'}
+                                `}
                             />
                             {!isCollapsed && (
                                 <span className="text-sm font-medium">{item.label}</span>
@@ -156,21 +159,6 @@ export default function Sidebar() {
                     );
                 })}
             </nav>
-
-            {/* Footer / User Info */}
-            {!isCollapsed && (
-                <div className="border-t border-white/10 p-4">
-                    <div className="flex items-center gap-3 rounded-lg bg-white/5 p-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-(--color-action-primary) text-sm font-semibold text-white">
-                            M
-                        </div>
-                        <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-white truncate">Manager</p>
-                            <p className="text-xs text-white/60 truncate">manager@warehouse.com</p>
-                        </div>
-                    </div>
-                </div>
-            )}
         </aside>
     );
 }

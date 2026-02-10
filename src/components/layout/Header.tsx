@@ -55,7 +55,10 @@ export default function Header({ onMenuClick }: HeaderProps) {
                 <div className="flex items-center gap-4">
                     {/* Mobile Menu Button */}
                     <button
-                        onClick={onMenuClick}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onMenuClick?.();
+                        }}
                         className="flex h-9 w-9 items-center justify-center rounded-lg text-(--color-text-secondary) hover:bg-(--color-bg-main) lg:hidden transition-colors"
                         aria-label="Open menu"
                     >

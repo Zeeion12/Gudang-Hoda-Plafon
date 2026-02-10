@@ -6,8 +6,6 @@ import {
     MdUpload,
     MdHistory,
     MdAssessment,
-    MdChevronLeft,
-    MdChevronRight,
     MdWarehouse,
 } from 'react-icons/md';
 
@@ -78,7 +76,13 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
             `}
         >
             {/* Header / Logo Area */}
-            <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
+            <div
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleCollapse();
+                }}
+                className="flex h-16 items-center justify-between border-b border-white/10 px-4 cursor-pointer hover:bg-white/5 transition-colors"
+            >
                 {!isCollapsed && (
                     <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-(--color-action-primary)">
@@ -96,28 +100,6 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
                         <MdWarehouse className="h-6 w-6 text-white" />
                     </div>
                 )}
-
-                {/* Collapse Toggle Button */}
-                <button
-                    onClick={onToggleCollapse}
-                    className={`
-                        absolute -right-3 top-6 
-                        flex h-6 w-6 items-center justify-center 
-                        rounded-full border-2 border-(--color-surface-dark)
-                        bg-(--color-action-primary)
-                        text-white
-                        hover:bg-(--color-action-hover)
-                        transition-colors
-                        ${isCollapsed ? 'left-1/2 -translate-x-1/2' : ''}
-                    `}
-                    aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-                >
-                    {isCollapsed ? (
-                        <MdChevronRight className="h-4 w-4" />
-                    ) : (
-                        <MdChevronLeft className="h-4 w-4" />
-                    )}
-                </button>
             </div>
 
             {/* Navigation Menu */}

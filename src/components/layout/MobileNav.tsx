@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     MdDashboard,
@@ -11,7 +11,6 @@ import {
     MdLogout,
 } from 'react-icons/md';
 import { useAuth } from '@/hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
 
 interface MobileNavProps {
     isOpen: boolean;
@@ -59,22 +58,27 @@ const navItems: NavItem[] = [
 
 export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
     const location = useLocation();
-    const { logout } = useAuth();
     const navigate = useNavigate();
+    const { logout } = useAuth();
 
     const isActive = (path: string) => {
-        // Exact match untuk root path
         if (path === '/') {
             return location.pathname === '/';
         }
-        // Untuk path lain, check starts with
         return location.pathname === path || location.pathname.startsWith(path + '/');
     };
 
-    // Close drawer saat route berubah
-    useEffect(() => {
-        onClose();
-    }, [location.pathname, onClose]);
+    // ✅ ALTERNATIVE FIX: Manual navigation dengan proper timing
+    // Ganti Link dengan button + onClick handler
+    const handleNavigate = (path: string) => {
+        // Step 1: Navigate dulu
+        navigate(path);
+
+        // Step 2: Close drawer setelah navigation start (delayed)
+        setTimeout(() => {
+            onClose();
+        }, 100);
+    };
 
     // Prevent scroll saat drawer open
     useEffect(() => {
@@ -146,7 +150,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                             </div>
                         </div>
 
-                        {/* Navigation */}
+                        {/* Navigation - Using button instead of Link */}
                         <nav className="flex-1 space-y-1 overflow-y-auto p-4">
                             {navItems.map((item, index) => {
                                 const Icon = item.icon;
@@ -159,11 +163,11 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: index * 0.05 }}
                                     >
-                                        <Link
-                                            to={item.path}
+                                        <button
+                                            onClick={() => handleNavigate(item.path)}
                                             className={`
                                                 group flex items-center gap-3 rounded-lg px-3 py-2.5
-                                                transition-all duration-200
+                                                transition-all duration-200 w-full text-left
                                                 ${active
                                                     ? 'bg-(--color-action-primary) text-white shadow-lg'
                                                     : 'text-white/70 hover:bg-white/5 hover:text-white'
@@ -185,7 +189,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                                                     className="ml-auto h-1.5 w-1.5 rounded-full bg-white"
                                                 />
                                             )}
-                                        </Link>
+                                        </button>
                                     </motion.div>
                                 );
                             })}

@@ -35,3 +35,4 @@ export interface StockInfo {
     label: string;
     color: string;
 }
+

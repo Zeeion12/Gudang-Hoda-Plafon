@@ -89,7 +89,7 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
                             <MdWarehouse className="h-6 w-6 text-white" />
                         </div>
                         <div>
-                            <h1 className="text-lg font-bold text-white">HodaPlafon</h1>
+                            <h1 className="text-lg font-bold text-white">MegaPlafon</h1>
                             <p className="text-xs text-white/60">Warehouse System</p>
                         </div>
                     </div>

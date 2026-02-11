@@ -71,7 +71,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
                             {pageTitle}
                         </h1>
                         <p className="text-xs text-(--color-text-muted) hidden sm:block">
-                            HodaPlafon Warehouse Management
+                            MegaPlafon Warehouse Management
                         </p>
                     </div>
                 </div>

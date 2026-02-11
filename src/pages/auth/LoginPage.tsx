@@ -57,7 +57,7 @@ export default function LoginPage() {
                         </div>
                     </div>
                     <h1 className="text-3xl font-bold text-(--color-text-primary)">
-                        HodaPlafon
+                        MegaPlafon
                     </h1>
                     <p className="text-sm text-(--color-text-muted)">
                         Sistem Manajemen Gudang
@@ -139,7 +139,7 @@ export default function LoginPage() {
 
                 {/* Footer */}
                 <p className="text-center text-xs text-(--color-text-muted)">
-                    © 2024 HodaPlafon. Sistem Manajemen Gudang.
+                    © 2024 MegaPlafon. Sistem Manajemen Gudang.
                 </p>
             </div>
         </div>

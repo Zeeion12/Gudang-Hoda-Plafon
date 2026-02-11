@@ -328,7 +328,7 @@ export default function ProductForm({
                     </Button>
                     <Button
                         type="submit"
-                        className="bg-(--color-action-primary) hover:bg-(--color-action-hover)"
+                        className="bg-(--color-action-primary) hover:bg-(--color-action-hover) text-white"
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? 'Menyimpan...' : isEdit ? 'Simpan Perubahan' : 'Tambah Produk'}

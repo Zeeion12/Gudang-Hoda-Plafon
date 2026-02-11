@@ -184,7 +184,7 @@ export default function StockOutPage() {
                                 Lihat Riwayat
                             </Button>
                             <Button
-                                className="flex-1 bg-(--color-action-primary) hover:bg-(--color-action-hover)"
+                                className="flex-1 bg-(--color-action-primary) hover:bg-(--color-action-hover) text-white"
                                 onClick={handleInputLagi}
                             >
                                 Input Lagi
@@ -416,7 +416,7 @@ export default function StockOutPage() {
                                 </Button>
                                 <Button
                                     type="submit"
-                                    className="bg-red-600 hover:bg-red-700 min-w-44"
+                                    className="bg-red-600 hover:bg-red-700 min-w-44 text-white"
                                     disabled={
                                         form.formState.isSubmitting ||
                                         !selectedProduct ||

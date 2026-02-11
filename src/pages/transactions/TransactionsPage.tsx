@@ -103,7 +103,7 @@ export default function TransactionsPage() {
                         <Button
                             variant="outline"
                             size="sm"
-                            className="border-blue-200 text-blue-600 hover:bg-blue-50"
+                            className="border-blue-400 text-blue-600 hover:bg-blue-50"
                         >
                             <MdArrowDownward className="h-4 w-4 mr-1" />
                             Barang Masuk
@@ -113,7 +113,7 @@ export default function TransactionsPage() {
                         <Button
                             variant="outline"
                             size="sm"
-                            className="border-red-200 text-red-500 hover:bg-red-50"
+                            className="border-red-400 text-red-500 hover:bg-red-50"
                         >
                             <MdArrowUpward className="h-4 w-4 mr-1" />
                             Barang Keluar
